@@ -6,9 +6,14 @@ import translate from '@/utils/translate';
 
 interface IProps extends FormComponentProps {
   onValue: (value: any) => void;
+  initValue?: any;
 }
 
-const EditorForm: React.FC<IProps> = ({ onValue, form: { getFieldDecorator, validateFields } }) => {
+const EditorForm: React.FC<IProps> = ({
+  onValue,
+  initValue,
+  form: { getFieldDecorator, validateFields },
+}) => {
   const FieldList = {
     input: (...rest: any[]) => <Input {...rest} />,
     phone: (...rest: any[]) => <Input {...rest} />,
@@ -47,10 +52,9 @@ const EditorForm: React.FC<IProps> = ({ onValue, form: { getFieldDecorator, vali
     e.preventDefault();
     try {
       const val = await validate();
-      console.log(val);
       onValue(val);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -67,6 +71,7 @@ const EditorForm: React.FC<IProps> = ({ onValue, form: { getFieldDecorator, vali
       <Form.Item label={translate(`info.profile.${name}`)} labelCol={{ span: col === 24 ? 2 : 6 }}>
         {getFieldDecorator(name, {
           rules: rules || [],
+          initialValue: initValue[name] || undefined,
         })(FieldList[component]())}
       </Form.Item>
     </Col>
