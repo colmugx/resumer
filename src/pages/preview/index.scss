@@ -1,0 +1,37 @@
+@media print {
+  .preview {
+    padding: 0.5cm 0.8cm;
+    margin-bottom: 30px;
+    min-height: 100%;
+
+    .footer {
+      display: block;
+      padding: 8px 1cm;
+    }
+  }
+}
+
+.footer {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: -22px;
+  bottom: -4px;
+  font-size: 9px;
+  text-align: right;
+  color: #dfdfdf;
+
+  span {
+    position: relative;
+    padding: 4px 0;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 1px;
+      width: 12px;
+      background-color: #f2f2f2;
+    }
+  }
+}
