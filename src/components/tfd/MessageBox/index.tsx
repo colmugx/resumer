@@ -131,7 +131,7 @@ const prjMsgBox = (msgList: TProj[]) => (
   </div>
 );
 
-const MessageBox: React.FC<IProps> = ({ type, data }) => {
+const MessageBox: React.FC<IProps> = ({ type, data = [] }) => {
   let document;
   switch (type) {
     case 'educations':

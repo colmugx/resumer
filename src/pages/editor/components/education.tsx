@@ -45,7 +45,6 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     const {
       form: { getFieldDecorator, getFieldValue },
     } = this.props;
-    getFieldDecorator('educations', { initialValue: [] });
     const educations: TEdu[] = getFieldValue('educations') || [];
     this.setState({
       list: educations,
