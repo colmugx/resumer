@@ -10,6 +10,10 @@ export default {
   'info.profile.qq': 'QQ: ',
   'info.profile.tags': 'Tags: ',
   'info.others.educations': 'Educations',
+  'info.others.educations.school': 'School',
+  'info.others.educations.interval': 'Interval',
+  'info.others.educations.level': 'Level',
+  'info.others.educations.major': 'Major',
   'info.others.skills': 'Skills',
   'info.others.experiences': 'Experiences',
   'info.others.projects': 'Project',
@@ -17,4 +21,8 @@ export default {
 
   // Common Message
   'common.editor': 'Editor',
+
+  // Form
+  'common.form.submit': 'Generate',
+  'common.form.reset': 'Reset',
 };

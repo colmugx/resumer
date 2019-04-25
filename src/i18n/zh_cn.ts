@@ -11,6 +11,10 @@ export default {
   'info.profile.qq': 'QQ：',
   'info.profile.tags': '关键词：',
   'info.others.educations': '教育经历',
+  'info.others.educations.school': '院校：',
+  'info.others.educations.interval': '时间：',
+  'info.others.educations.level': '学位：',
+  'info.others.educations.major': '专业：',
   'info.others.skills': '技能列表',
   'info.others.experiences': '工作经历',
   'info.others.projects': '公开项目',
@@ -18,4 +22,8 @@ export default {
 
   // Common Message
   'common.editor': '编辑器',
+
+  // Form
+  'common.form.submit': '生成',
+  'common.form.reset': '重置',
 };
