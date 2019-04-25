@@ -23,9 +23,7 @@ const config: IConfig =  {
       },
     }],
   ],
-  theme: {
-    "primary-color": "#999"
-  },
+  theme: {},
 }
 
 export default config;
