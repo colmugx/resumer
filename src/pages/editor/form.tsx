@@ -1,8 +1,39 @@
 import React, { FormEvent, useState } from 'react';
-import { Form, Button, Input, Select, AutoComplete, Row, Col } from 'antd';
+import { Form, Button, Input, Select, AutoComplete, Row, Col, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
+import EducationWrapper from './components/education'
 import { profile as profileList } from '@/constant/column';
 import translate from '@/utils/translate';
+
+export type TDegree = {
+  major: string;
+  interval: string;
+  level: string;
+}
+export type TEdu = {
+  school: string;
+  degrees: TDegree[];
+};
+export type TSkill = {
+  name: string;
+  description: string[];
+};
+export type TExp = {
+  name: string;
+  tags: string[];
+  time: string;
+  position: string;
+  description: {
+    name: string;
+    summary: string[];
+  }[];
+};
+export type TProj = {
+  name: string;
+  link: string;
+  stack: string[];
+  description: string[];
+};
 
 interface IProps extends FormComponentProps {
   onValue: (value: any) => void;
@@ -12,8 +43,9 @@ interface IProps extends FormComponentProps {
 const EditorForm: React.FC<IProps> = ({
   onValue,
   initValue,
-  form: { getFieldDecorator, validateFields },
+  form,
 }) => {
+  const { getFieldDecorator, validateFields } = form
   const FieldList = {
     input: (...rest: any[]) => <Input {...rest} />,
     phone: (...rest: any[]) => <Input {...rest} />,
@@ -71,11 +103,24 @@ const EditorForm: React.FC<IProps> = ({
       <Form.Item label={translate(`info.profile.${name}`)} labelCol={{ span: col === 24 ? 2 : 6 }}>
         {getFieldDecorator(name, {
           rules: rules || [],
-          initialValue: initValue[name] || undefined,
+          initialValue: initValue.profile[name] || undefined,
         })(FieldList[component]())}
+        { col === 24 ? <span style={{ fontSize: 12, color: '#999'}}>用 "," 隔开</span> : null}
       </Form.Item>
     </Col>
   );
+
+  const renderProfile = () => (
+    <div>
+      <h2>基础信息</h2>
+      <Row>
+        {profileList.map((col, idx, list) =>
+          renderInput(col as any, list.length - 1 === idx ? 24 : undefined),
+        )}
+      </Row>
+    </div>
+  );
+
   return (
     <Form
       labelAlign="right"
@@ -83,19 +128,17 @@ const EditorForm: React.FC<IProps> = ({
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 16 }}
       onSubmit={handleSubmit}
-      style={{
-        display: 'flex',
-        flexFlow: 'row wrap',
-      }}
     >
-      <Row>
-        {profileList.map((col, idx, list) =>
-          renderInput(col as any, list.length - 1 === idx ? 24 : undefined),
-        )}
-      </Row>
-      <Form.Item style={{ width: '200px' }}>
+      {renderProfile()}
+      {getFieldDecorator('educations')(
+        <EducationWrapper form={form} />
+      )}
+      <Form.Item>
         <Button type="primary" htmlType="submit">
-          Submit
+          {translate('common.form.submit')}
+        </Button>
+        <Button type="default" htmlType="reset">
+          {translate('common.form.reset')}
         </Button>
       </Form.Item>
     </Form>

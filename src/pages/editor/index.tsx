@@ -13,11 +13,18 @@ interface IProps {
   };
 }
 
-const IndexPage: React.FC<IProps> = ({ dispatch, information: { profile } }) => {
+const IndexPage: React.FC<IProps> = ({ dispatch, information }) => {
   const handleValue = (vals: any) => {
+    const {educations, ...profile} = vals
     dispatch({
       type: 'information/updateProfile',
-      payload: vals,
+      payload: profile,
+    });
+    dispatch({
+      type: 'information/updateOthers',
+      payload: {
+        educations
+      },
     });
     router.push('/preview');
   };
@@ -28,7 +35,7 @@ const IndexPage: React.FC<IProps> = ({ dispatch, information: { profile } }) => 
         <h2>{translate('common.editor')}</h2>
       </div>
       <div className="workspace">
-        <Form onValue={handleValue} initValue={profile} />
+        <Form onValue={handleValue} initValue={information} />
       </div>
     </div>
   );

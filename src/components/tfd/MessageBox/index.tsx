@@ -1,34 +1,6 @@
 import React from 'react';
 import styles from './index.scss';
-
-type TEdu = {
-  school: string;
-  degrees: {
-    major: string;
-    interval: string;
-    level: string;
-  }[];
-};
-type TSkill = {
-  name: string;
-  description: string[];
-};
-type TExp = {
-  name: string;
-  tags: string[];
-  time: string;
-  position: string;
-  description: {
-    name: string;
-    summary: string[];
-  }[];
-};
-type TProj = {
-  name: string;
-  link: string;
-  stack: string[];
-  description: string[];
-};
+import { TEdu, TSkill, TExp, TProj } from '@/pages/editor/form';
 
 interface IProps {
   type: string;
@@ -95,13 +67,15 @@ const expMsgBox = (msgList: TExp[]) => (
             <time>{time}</time>
             <span>{position}</span>
           </div>
-          {tags && tags.length && <ul className="tag-list">
-            {tags.map(tag => (
-              <li key={`tag-${name}-${tag}`} className="tag-item">
-                <span>{tag}</span>
-              </li>
-            ))}
-          </ul>}
+          {tags && tags.length && (
+            <ul className="tag-list">
+              {tags.map(tag => (
+                <li key={`tag-${name}-${tag}`} className="tag-item">
+                  <span>{tag}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </header>
         <div className="description">
           {description.map(({ name: pname, summary: summarys }) =>
