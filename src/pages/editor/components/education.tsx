@@ -1,8 +1,10 @@
 import React, { PureComponent, Fragment } from 'react';
-import { Row, Col, Input, Select, Form, Button } from 'antd';
+import { Row, Col, Input, Select, Form, Button, Icon } from 'antd';
 import translate from '@/utils/translate';
 import { FormComponentProps } from 'antd/lib/form';
 import { TEdu, TDegree } from '../form';
+
+import styles from './education.scss';
 
 interface IProps extends FormComponentProps {
   onChange?: (val: any) => any;
@@ -34,7 +36,7 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      editing: true,
+      editing: false,
       list: [],
     };
   }
@@ -62,17 +64,17 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     this.saveValue(newList);
   };
 
-  remove = k => {
-    const {
-      form: { setFieldsValue, getFieldValue },
-    } = this.props;
-    const educations = getFieldValue('educations');
-    if (educations.length === 1) {
+  remove = (k: number) => {
+    const { list } = this.state;
+    if (list.length === 1) {
       return;
     }
-    setFieldsValue({
-      educations: educations.filter((key: any) => key !== k),
+
+    const newList = list.filter(({ id }: { id: number }) => id !== k);
+    this.setState({
+      list: newList,
     });
+    this.saveValue(newList);
   };
 
   handleSchoolInput = (e: any, key: string, idx: number) => {
@@ -98,7 +100,7 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     });
   };
 
-  saveValue = vals => {
+  saveValue = (vals: any) => {
     const { onChange } = this.props;
     this.setState({
       editing: false,
@@ -135,14 +137,21 @@ class EducationWrapper extends PureComponent<IProps, IState> {
 
   renderSchoolItem(school: string, degrees: any[], key: number) {
     return (
-      <div>
-        <Form.Item label={translate('info.others.educations.school')} labelCol={{ span: 2 }}>
-          <Input defaultValue={school} onBlur={e => this.handleSchoolInput(e, 'school', key)} />
-        </Form.Item>
-        {degrees.map((items, idx) => (
-          <Fragment key={`degree-${idx}`}>{this.renderDegreeItem(items, key, idx)}</Fragment>
-        ))}
-      </div>
+      <>
+        <div className={styles.left}>
+          <Form.Item label={translate('info.others.educations.school')} labelCol={{ span: 2 }}>
+            <Input defaultValue={school} onBlur={e => this.handleSchoolInput(e, 'school', key)} />
+          </Form.Item>
+          {degrees.map((items, idx) => (
+            <Fragment key={`degree-${idx}`}>{this.renderDegreeItem(items, key, idx)}</Fragment>
+          ))}
+        </div>
+        <div className={styles.right}>
+          <a onClick={() => this.remove(key)}>
+            <Icon type="close" style={{ color: '#f5222d' }} />
+          </a>
+        </div>
+      </>
     );
   }
 
@@ -168,16 +177,23 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     const { list } = this.state;
 
     return (
-      <div>
+      <div className={styles.education}>
         <h2>{translate('info.others.educations')}</h2>
         {list.map(({ school, degrees, key }, idx) => (
-          <div key={`list-${key}`}>{this.renderSchoolItem(school, degrees, idx)}</div>
+          <div key={`list-${key}`} className={styles.schoolItem}>
+            {this.renderSchoolItem(school, degrees, idx)}
+          </div>
         ))}
         <Form.Item>
           <Button type="dashed" onClick={this.addSchool} style={{ width: '60%' }}>
-            添加条目
+            <Icon type="plus" />
+            添加教育经历
           </Button>
-          {this.state.editing && <a onClick={() => this.saveValue(this.state.list)}>锁定</a>}
+          {this.state.editing && (
+            <a onClick={() => this.saveValue(this.state.list)} style={{ marginLeft: 16 }}>
+              锁定
+            </a>
+          )}
         </Form.Item>
       </div>
     );
