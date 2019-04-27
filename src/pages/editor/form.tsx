@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import { Form, Button, Input, Select, AutoComplete, Row, Col, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import EducationWrapper from './components/education'
+import EducationWrapper from './components/education';
 import { profile as profileList } from '@/constant/column';
 import translate from '@/utils/translate';
 
@@ -9,7 +9,7 @@ export type TDegree = {
   major: string;
   interval: string;
   level: string;
-}
+};
 export type TEdu = {
   school: string;
   degrees: TDegree[];
@@ -40,12 +40,8 @@ interface IProps extends FormComponentProps {
   initValue?: any;
 }
 
-const EditorForm: React.FC<IProps> = ({
-  onValue,
-  initValue,
-  form,
-}) => {
-  const { getFieldDecorator, validateFields } = form
+const EditorForm: React.FC<IProps> = ({ onValue, initValue, form }) => {
+  const { getFieldDecorator, validateFields } = form;
   const FieldList = {
     input: (...rest: any[]) => <Input {...rest} />,
     phone: (...rest: any[]) => <Input {...rest} />,
@@ -105,7 +101,7 @@ const EditorForm: React.FC<IProps> = ({
           rules: rules || [],
           initialValue: initValue.profile[name] || undefined,
         })(FieldList[component]())}
-        { col === 24 ? <span style={{ fontSize: 12, color: '#999'}}>用 "," 隔开</span> : null}
+        {col === 24 ? <span style={{ fontSize: 12, color: '#999' }}>用 "," 隔开</span> : null}
       </Form.Item>
     </Col>
   );
@@ -130,9 +126,7 @@ const EditorForm: React.FC<IProps> = ({
       onSubmit={handleSubmit}
     >
       {renderProfile()}
-      {getFieldDecorator('educations')(
-        <EducationWrapper form={form} />
-      )}
+      {getFieldDecorator('educations')(<EducationWrapper form={form} />)}
       <Form.Item>
         <Button type="primary" htmlType="submit">
           {translate('common.form.submit')}

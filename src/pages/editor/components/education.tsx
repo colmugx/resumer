@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import { Row, Col, Input, Select, Form, Button, Icon } from 'antd';
 import translate from '@/utils/translate';
 import { FormComponentProps } from 'antd/lib/form';
@@ -16,15 +16,15 @@ interface IState {
 
 type TDegreeItem = 'interval' | 'level' | 'major';
 
-const TEMPLATE = {
+const DEGREE_TEMPLATE = {
+  level: '-',
+  major: '',
+  interval: '',
+};
+
+const SCHOOL_TEMPLATE = {
   school: '电子科技大学',
-  degrees: [
-    {
-      level: '本科',
-      major: '',
-      interval: '',
-    },
-  ],
+  degrees: [{ ...DEGREE_TEMPLATE }],
 };
 
 const levelList = ['-', '大专', '本科/学士', '研究生', '硕士', '博士'];
@@ -43,12 +43,13 @@ class EducationWrapper extends PureComponent<IProps, IState> {
 
   componentDidMount() {
     const {
-      form: { getFieldDecorator, getFieldValue },
+      form: { getFieldValue },
     } = this.props;
     const educations: TEdu[] = getFieldValue('educations') || [];
     this.setState({
       list: educations,
     });
+    this.addSchool();
   }
 
   addSchool = () => {
@@ -56,14 +57,36 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     const newList = list.concat({
       id: this.idx,
       key: `school-${this.idx}`,
-      ...TEMPLATE,
+      ...SCHOOL_TEMPLATE,
     });
     this.idx += 1;
     this.setState({ list: newList });
     this.saveValue(newList);
   };
 
-  remove = (k: number) => {
+  addDegree = (key: number) => {
+    const { list } = this.state;
+    const newList = [...list];
+    const data = newList[key]['degrees'].concat([{ ...DEGREE_TEMPLATE }]);
+    newList[key]['degrees'] = data;
+    this.setState({ list: newList });
+    this.saveValue(newList);
+  };
+
+  removeDegree = (key: number, idx: number) => {
+    const { list } = this.state;
+    const newList = [...list];
+    let data = newList[key]['degrees'];
+    if (data.length === 1) {
+      return;
+    }
+    data = data.filter(({ id }: { id: number }) => id !== idx);
+    newList[key]['degrees'] = data;
+    this.setState({ list: newList });
+    this.saveValue(newList);
+  };
+
+  removeSchool = (k: number) => {
     const { list } = this.state;
     if (list.length === 1) {
       return;
@@ -76,11 +99,11 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     this.saveValue(newList);
   };
 
-  handleSchoolInput = (e: any, key: string, idx: number) => {
+  handleSchoolInput = (e: any, idx: number) => {
     const { list } = this.state;
     const newList = [...list];
     const data = newList[idx];
-    data[key] = e.target.value;
+    data.school = e.target.value;
 
     this.setState({
       list: newList,
@@ -91,9 +114,8 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     this.setState({ editing: true });
     const { list } = this.state;
     const newList = [...list];
-    const data = newList[idx]['degrees'];
-    data[didx][key] = val;
-
+    const degrees = newList[idx]['degrees'];
+    degrees[didx][key] = val;
     this.setState({
       list: newList,
     });
@@ -107,23 +129,23 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     onChange && onChange(vals);
   };
 
-  fieldList = (vals: TDegree, key: TDegreeItem, idx: number, didx: number) => ({
+  fieldList = (dfVal: string, idx: number, didx: number) => ({
     interval: (
       <Input
-        defaultValue={vals[key]}
-        onBlur={e => this.handleDegreeInput(e.target.value, key, idx, didx)}
+        defaultValue={dfVal}
+        onBlur={e => this.handleDegreeInput(e.target.value, 'interval', idx, didx)}
       />
     ),
     major: (
       <Input
-        defaultValue={vals[key]}
-        onBlur={e => this.handleDegreeInput(e.target.value, key, idx, didx)}
+        defaultValue={dfVal}
+        onBlur={e => this.handleDegreeInput(e.target.value, 'major', idx, didx)}
       />
     ),
     level: (
       <Select
-        defaultValue={vals[key]}
-        onChange={val => this.handleDegreeInput(val, key, idx, didx)}
+        defaultValue={dfVal}
+        onChange={val => this.handleDegreeInput(val, 'level', idx, didx)}
       >
         {levelList.map(item => (
           <Select.Option key={`level-item-${item}`} value={item}>
@@ -139,16 +161,27 @@ class EducationWrapper extends PureComponent<IProps, IState> {
       <>
         <div className={styles.left}>
           <Form.Item label={translate('info.others.educations.school')} labelCol={{ span: 2 }}>
-            <Input defaultValue={school} onBlur={e => this.handleSchoolInput(e, 'school', key)} />
+            <Input defaultValue={school} onBlur={e => this.handleSchoolInput(e, key)} />
           </Form.Item>
           {degrees.map((items, idx) => (
-            <Fragment key={`degree-${idx}`}>{this.renderDegreeItem(items, key, idx)}</Fragment>
+            <div key={`degree-${idx}`} className={styles.degreeItem}>
+              {/* key: 学校序位, idx: 一组最高学位序位 */}
+              <div>{this.renderDegreeItem(items, key, idx)}</div>
+              <div className={styles.opreate}>
+                <Button type="primary" icon="plus" onClick={() => this.addDegree(key)} />
+                {idx !== 0 && (
+                  <Button type="danger" icon="close" onClick={() => this.removeDegree(key, idx)} />
+                )}
+              </div>
+            </div>
           ))}
         </div>
         <div className={styles.right}>
-          <a onClick={() => this.remove(key)}>
-            <Icon type="close" style={{ color: '#f5222d' }} />
-          </a>
+          {key !== 0 && (
+            <a onClick={() => this.removeSchool(key)}>
+              <Icon type="close" style={{ color: '#f5222d' }} />
+            </a>
+          )}
         </div>
       </>
     );
@@ -164,7 +197,7 @@ class EducationWrapper extends PureComponent<IProps, IState> {
               labelCol={{ span: 6 }}
               wrapperCol={{ span: 16 }}
             >
-              {this.fieldList(list, key as TDegreeItem, idx, didx)[key as TDegreeItem]}
+              {this.fieldList(list[key as TDegreeItem], idx, didx)[key as TDegreeItem]}
             </Form.Item>
           </Col>
         ))}

@@ -20,3 +20,17 @@
     font-weight: bold;
   }
 }
+
+.degreeItem {
+  display: flex;
+
+  .opreate {
+    margin-top: 6px;
+    font-size: 20px;
+
+    button {
+      width: 55px;
+      margin: 0 16px;
+    }
+  }
+}
