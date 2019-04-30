@@ -16,6 +16,12 @@ export default {
   'info.others.educations.major': 'Major',
   'info.others.skills': 'Skills',
   'info.others.experiences': 'Experiences',
+  'info.others.experiences.name': 'Company Name',
+  'info.others.experiences.tags': 'Tags',
+  'info.others.experiences.time': 'Interval',
+  'info.others.experiences.position': 'Position',
+  'info.others.experiences.desc.name': 'Project Name',
+  'info.others.experiences.desc.summary': 'Summary',
   'info.others.projects': 'Project',
   'info.others.personal': 'Personal',
 

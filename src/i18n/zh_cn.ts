@@ -17,6 +17,12 @@ export default {
   'info.others.educations.major': '专业：',
   'info.others.skills': '技能列表',
   'info.others.experiences': '工作经历',
+  'info.others.experiences.name': '企业名称',
+  'info.others.experiences.tags': '标签',
+  'info.others.experiences.time': '工作时间',
+  'info.others.experiences.position': '定位/职务',
+  'info.others.experiences.desc.name': '项目名称/工作简介',
+  'info.others.experiences.desc.summary': '详细描述',
   'info.others.projects': '公开项目',
   'info.others.personal': '其他信息',
 
