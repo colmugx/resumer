@@ -27,6 +27,7 @@ export default {
 
   // Common Message
   'common.editor': 'Editor',
+  'common.add': 'Add',
 
   // Form
   'common.form.submit': 'Generate',
