@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Input, Select, Form, Button, Icon } from 'antd';
+import { Input, Select, Form, Button, Icon } from 'antd';
 import translate from '@/utils/translate';
 import { FormComponentProps } from 'antd/lib/form';
 import { TExp, TDesc } from '../form';
