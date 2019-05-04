@@ -93,7 +93,7 @@ const expMsgBox = (msgList: TExp[]) => (
                 )}
               </div>
             ) : (
-              <div>未能工作详细描述</div>
+              <div key={`desc-${pname}`}>未能工作详细描述</div>
             ),
           )}
         </div>

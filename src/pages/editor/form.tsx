@@ -47,7 +47,7 @@ const EditorForm: React.FC<IProps> = ({ onValue, initValue, form }) => {
   const { getFieldDecorator, validateFields } = form;
   const FieldList = {
     input: (...rest: any[]) => <Input {...rest} />,
-    phone: (...rest: any[]) => <Input {...rest} />,
+    phone: (...rest: any[]) => <Input type="tel" {...rest} />,
     tags: (...rest: any[]) => {
       return (
         <Select

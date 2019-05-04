@@ -20,8 +20,8 @@ const TFDGenerate: React.FC<IProps> = ({ data }) => {
     <div className={styles.tfdScheme}>
       <Profile info={data.profile} />
       {Object.keys(data.others).map(key => data.others[key] && (
-        <InfoBox key={key} title={translate(`info.others.${key}`)} >
-          <MessageBox key={`mbox-${name}`} type={key} data={data.others[key]} />
+        <InfoBox key={`infobox-${key}`} title={translate(`info.others.${key}`)}>
+          <MessageBox type={key} data={data.others[key]} />
         </InfoBox>
       ))}
     </div>
