@@ -67,7 +67,7 @@ const expMsgBox = (msgList: TExp[]) => (
             <time>{time}</time>
             <span>{position}</span>
           </div>
-          {tags && tags.length && (
+          {tags && !!tags.length && (
             <ul className="tag-list">
               {tags.map(tag => (
                 <li key={`tag-${name}-${tag}`} className="tag-item">
