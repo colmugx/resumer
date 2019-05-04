@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from 'react';
 import { Form, Button, Input, Select, AutoComplete, Row, Col, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import EducationWrapper from './components/education';
+import ExperiencesWrapper from './components/experiences';
 import { profile as profileList } from '@/constant/column';
 import translate from '@/utils/translate';
 
@@ -18,15 +19,16 @@ export type TSkill = {
   name: string;
   description: string[];
 };
+export type TDesc = {
+  name: string;
+  summary: string[];
+};
 export type TExp = {
   name: string;
   tags: string[];
   time: string;
   position: string;
-  description: {
-    name: string;
-    summary: string[];
-  }[];
+  description: TDesc[];
 };
 export type TProj = {
   name: string;
@@ -117,6 +119,13 @@ const EditorForm: React.FC<IProps> = ({ onValue, initValue, form }) => {
     </div>
   );
 
+  const renderPersonal = () => (
+    <div>
+      <h2>其他信息</h2>
+      {getFieldDecorator('personal')(<Input.TextArea autosize={{ minRows: 4 }} />)}
+    </div>
+  );
+
   return (
     <Form
       labelAlign="right"
@@ -127,6 +136,8 @@ const EditorForm: React.FC<IProps> = ({ onValue, initValue, form }) => {
     >
       {renderProfile()}
       {getFieldDecorator('educations')(<EducationWrapper form={form} />)}
+      {getFieldDecorator('experiences')(<ExperiencesWrapper form={form} />)}
+      {renderPersonal()}
       <Form.Item>
         <Button type="primary" htmlType="submit">
           {translate('common.form.submit')}
