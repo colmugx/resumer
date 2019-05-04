@@ -25,7 +25,7 @@ const config: IConfig =  {
   ],
   theme: {},
   base: '/resumer',
-  publicPath: '/resumer'
+  publicPath: '/resumer/'
 }
 
 export default config;
