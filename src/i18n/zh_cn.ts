@@ -24,6 +24,10 @@ export default {
   'info.others.experiences.desc.name': '项目名称/工作简介：',
   'info.others.experiences.desc.summary': '详细描述：',
   'info.others.projects': '公开项目',
+  'info.others.projects.name': '项目名称：',
+  'info.others.projects.link': '项目链接：',
+  'info.others.projects.stack': '技术栈/关键词：',
+  'info.others.projects.description': '详细描述：',
   'info.others.personal': '其他信息',
 
   // Common Message
