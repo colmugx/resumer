@@ -1,0 +1,54 @@
+.schoolItem {
+  display: flex;
+  padding: 8px 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-child {
+    margin-bottom: 32px;
+    border-color: transparent;
+  }
+
+  .left {
+    flex: 1;
+  }
+
+  .right {
+    min-width: 32px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+.degreeItem {
+  display: flex;
+  background-color: rgba(#1890ff, 0.03);
+  padding: 8px 16px 4px;
+  .opreate {
+    margin-top: 6px;
+    font-size: 20px;
+    min-width: 72px;
+    a {
+      width: 55px;
+      margin-right: 16px;
+      &:nth-child(2) {
+        color: #f5222d
+      }
+    }
+  }
+}
+
+.experienceItem {
+  padding: 8px 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.descriptionItem {
+  @extend .degreeItem;
+
+  div:not(.opreate) {
+    flex: 1;
+  }
+}

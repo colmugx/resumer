@@ -1,0 +1,183 @@
+@import '../styles/base';
+@import '@/styles/func.scss';
+
+.messagebox {
+  ul {
+    line-height: 1.5;
+    list-style: circle;
+    padding: 0 16px;
+    margin-bottom: 0;
+  }
+
+  h4 {
+    padding: 0;
+    margin-bottom: 4px;
+  }
+}
+
+.normal {
+  line-height: 1.5;
+  padding: 0 16px;
+  list-style: circle;
+}
+
+.edu {
+  &Item {
+    p {
+      margin: 0
+    }
+
+    .degree {
+      &List {
+        list-style: none;
+      }
+
+      &Item {
+        &::before {
+          content: '-';
+          padding-right: 16px;
+        }
+      }
+    }
+
+    :global {
+      .time,
+      .degree,
+      .major {
+        font-size: 14px;
+        margin-right: 16px;
+      }
+    }
+  }
+}
+
+.skill {
+  &List {
+    margin-left: 16px;
+  }
+  &Item {
+    margin-bottom: 12px;
+  }
+}
+
+.experience {
+
+  &Item {
+    margin-bottom: 12px;
+
+    :global {
+      .project {
+        margin-left: 8px;
+        font-size: 14px;
+
+        h5 {
+          margin: 0;
+          padding: 4px 0;
+
+          &::before {
+            content: '-';
+            padding-right: 8px;
+          }
+        }
+
+        ul {
+          margin-left: 16px;
+        }
+      }
+    }
+  }
+
+  h4 {
+    margin-bottom: 0;
+  }
+
+  .header {
+    :global {
+      .title {
+        @include flex() {
+          align-items: baseline;
+
+          * {
+            margin-right: 16px;
+          }
+
+          span,
+          time {
+            font-size: 14px;
+            color: $text-color-desc;
+          }
+        };
+      }
+
+      .tag-list {
+        padding: 0;
+        list-style: none;
+
+        .tag-item {
+          display: inline-block;
+          font-size: 14px;
+          margin-left: 4px;
+          margin-right: 16px;
+          color: $text-color-desc;
+
+          &::before {
+            content: '#';
+            padding-right: 2px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.project {
+
+  .header {
+    :global {
+      .title {
+        @include flex() {
+          align-items: baseline;
+
+          * {
+            margin-right: 16px;
+          }
+
+          h4 {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .tag-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        .tag-item {
+          display: inline-block;
+          font-size: 14px;
+          margin-right: 8px;
+          color: $text-color-desc;
+
+          span {
+            margin: 0;
+          }
+
+          &::before {
+            content: '#';
+            padding-right: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  &Item {
+
+    ul {
+      margin: 4px 0 8px;
+      margin-left: 16px;
+    }
+
+  }
+}

@@ -1,0 +1,13 @@
+@import './base';
+
+body {
+  color: $text-color-main;
+}
+
+@each $name, $val in $heading-list {
+  #{$name} {
+    font-size: $val;
+    font-weight: bold;
+    padding: 8px 0;
+  }
+}
