@@ -24,6 +24,7 @@ const config: IConfig =  {
     }],
   ],
   theme: {},
+  base: '/resumer'
 }
 
 export default config;
