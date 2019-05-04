@@ -15,7 +15,7 @@ interface IProps {
 
 const IndexPage: React.FC<IProps> = ({ dispatch, information }) => {
   const handleValue = (vals: any) => {
-    const {educations, experiences, ...profile} = vals
+    const { educations, experiences, personal, ...profile } = vals;
     dispatch({
       type: 'information/updateProfile',
       payload: profile,
@@ -24,7 +24,8 @@ const IndexPage: React.FC<IProps> = ({ dispatch, information }) => {
       type: 'information/updateOthers',
       payload: {
         educations,
-        experiences
+        experiences,
+        personal: personal.split('\n'),
       },
     });
     router.push('/preview');

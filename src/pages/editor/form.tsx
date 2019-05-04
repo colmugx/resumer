@@ -1,8 +1,8 @@
 import React, { FormEvent, useState } from 'react';
-import { Form, Button, Input, Select, AutoComplete, Row, Col, Icon } from 'antd';
+import { Form, Button, Input, Select, AutoComplete, Row, Col } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import EducationWrapper from './components/education';
-import ExperiencesWrapper from './components/experiences';
+import ExperiencesWrapper from './components/experience';
 import { profile as profileList } from '@/constant/column';
 import translate from '@/utils/translate';
 
