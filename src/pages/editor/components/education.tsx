@@ -25,13 +25,13 @@ const DEGREE_TEMPLATE = {
 
 const SCHOOL_TEMPLATE = {
   school: '电子科技大学',
-  degrees: [{ ...DEGREE_TEMPLATE }],
 };
 
 const levelList = ['-', '大专', '本科/学士', '研究生', '硕士', '博士'];
 
 class EducationWrapper extends PureComponent<IProps, IState> {
   idx: number = 0;
+  didx: number = 0;
 
   constructor(props: any) {
     super(props);
@@ -59,8 +59,13 @@ class EducationWrapper extends PureComponent<IProps, IState> {
       id: this.idx,
       key: `school-${this.idx}`,
       ...SCHOOL_TEMPLATE,
+      degrees: [{
+        key: `degree-${this.didx}`,
+        ...DEGREE_TEMPLATE
+      }]
     });
     this.idx += 1;
+    this.didx += 1;
     this.setState({ list: newList });
     this.saveValue(newList);
   };
@@ -74,14 +79,14 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     this.saveValue(newList);
   };
 
-  removeDegree = (key: number, idx: number) => {
+  removeDegree = (key: number, k: string) => {
     const { list } = this.state;
     const newList = [...list];
     let data = newList[key]['degrees'];
     if (data.length === 1) {
       return;
     }
-    data = data.filter((_:undefined, id: number) => id !== idx);
+    data = data.filter(({ key: sk}: {key: string}) => sk !== k);
     newList[key]['degrees'] = data;
     this.setState({ list: newList });
     this.saveValue(newList);
@@ -171,7 +176,7 @@ class EducationWrapper extends PureComponent<IProps, IState> {
                   <Icon type="plus" />
                 </a>
                 {idx !== 0 && (
-                  <a onClick={() => this.removeDegree(key, idx)} >
+                  <a onClick={() => this.removeDegree(key, items.key)} >
                     <Icon type="close" />
                   </a>
                 )}
@@ -194,7 +199,7 @@ class EducationWrapper extends PureComponent<IProps, IState> {
   renderDegreeItem(list: TDegree, idx: number, didx: number) {
     return (
       <Row>
-        {Object.keys(list).map((key, kidx) => (
+        {Object.keys(list).map((key, kidx) => key !== 'key' && (
           <Col key={`degree-${key}-${kidx}`} span={8}>
             <Form.Item
               label={translate(`info.others.educations.${key}`)}

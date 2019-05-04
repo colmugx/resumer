@@ -26,7 +26,7 @@ const IndexPage: React.FC<IProps> = ({ dispatch, information }) => {
         educations,
         experiences,
         projects,
-        personal: personal.split('\n'),
+        personal: personal ? personal.split('\n') : [],
       },
     });
     router.push('/preview');

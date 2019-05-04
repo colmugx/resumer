@@ -30,11 +30,11 @@ const EXPERIENCE_TEMPLATE = {
   tags: [],
   time: '',
   position: '前端工程师',
-  description: [{ ...DESCRIPTION_TEMPLATE }],
 };
 
 class ExperienceWrapper extends PureComponent<IProps, IState> {
   idx: number = 0;
+  didx: number = 0;
 
   constructor(props: any) {
     super(props);
@@ -62,8 +62,13 @@ class ExperienceWrapper extends PureComponent<IProps, IState> {
       id: this.idx,
       key: `company-${this.idx}`,
       ...EXPERIENCE_TEMPLATE,
+      description: [{
+        key: `desc-${this.didx}`,
+        ...DESCRIPTION_TEMPLATE,
+      }],
     });
     this.idx += 1;
+    this.didx += 1;
     this.setState({ list: newList });
     this.saveValue(newList);
   };
@@ -71,20 +76,26 @@ class ExperienceWrapper extends PureComponent<IProps, IState> {
   addDesc = (key: number) => {
     const { list } = this.state;
     const newList = [...list];
-    const data = newList[key]['description'].concat([{ ...DESCRIPTION_TEMPLATE }]);
+    const data = newList[key]['description'].concat([
+      {
+        key: `desc-${this.didx}`,
+        ...DESCRIPTION_TEMPLATE,
+      },
+    ]);
+    this.didx += 1;
     newList[key]['description'] = data;
     this.setState({ list: newList });
     this.saveValue(newList);
   };
 
-  removeDesc = (key: number, idx: number) => {
+  removeDesc = (key: number, k: string) => {
     const { list } = this.state;
     const newList = [...list];
     let data = newList[key]['description'];
     if (data.length === 1) {
       return;
     }
-    data = data.filter((_: undefined, id: number) => id !== idx);
+    data = data.filter(({ key: sk }: { key: string }) => sk !== k);
     newList[key]['description'] = data;
     this.setState({ list: newList });
     this.saveValue(newList);
@@ -136,6 +147,7 @@ class ExperienceWrapper extends PureComponent<IProps, IState> {
             tokenSeparators={[',']}
             allowClear
             dropdownStyle={{ display: 'none' }}
+            placeholder={`用 "," 隔开`}
             onBlur={e => this.handleInput(e, 'tags', key)}
           />
         </FormItem>
@@ -149,13 +161,13 @@ class ExperienceWrapper extends PureComponent<IProps, IState> {
           />
         </FormItem>
         {descriptions.map((item, idx) => (
-          <div className={styles.descriptionItem} key={`description-${idx}`}>
+          <div className={styles.descriptionItem} key={`description-${key}-${idx}`}>
             <div className={styles.opreate}>
               <a onClick={() => this.addDesc(key)}>
                 <Icon type="plus" />
               </a>
               {idx !== 0 && (
-                <a onClick={() => this.removeDesc(key, idx)}>
+                <a onClick={() => this.removeDesc(key, item.key)}>
                   <Icon type="close" />
                 </a>
               )}
@@ -180,7 +192,7 @@ class ExperienceWrapper extends PureComponent<IProps, IState> {
           <Input.TextArea
             defaultValue={summary.join('\n')}
             autosize={{ minRows: 4 }}
-            onBlur={e => this.handleDescInput((e.target.value).split('\n'), 'summary', key, idx)}
+            onBlur={e => this.handleDescInput(e.target.value.split('\n'), 'summary', key, idx)}
           />
         </FormItem>
       </>

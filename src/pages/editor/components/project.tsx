@@ -47,7 +47,6 @@ class ProjectWrapper extends PureComponent<IProps, IState> {
     this.setState({
       list: educations,
     });
-    this.addItem();
   }
 
   addItem = () => {
@@ -94,6 +93,7 @@ class ProjectWrapper extends PureComponent<IProps, IState> {
             tokenSeparators={[',']}
             allowClear
             dropdownStyle={{ display: 'none' }}
+            placeholder={`用 "," 隔开`}
             onBlur={e => this.handleInput(e, 'stack', key)}
           />
         </FormItem>

@@ -55,6 +55,7 @@ const EditorForm: React.FC<IProps> = ({ onValue, initValue, form }) => {
           tokenSeparators={[',']}
           allowClear
           dropdownStyle={{ display: 'none' }}
+          placeholder={`用 "," 隔开`}
           {...rest}
         />
       );
@@ -104,7 +105,6 @@ const EditorForm: React.FC<IProps> = ({ onValue, initValue, form }) => {
           rules: rules || [],
           initialValue: initValue.profile[name] || undefined,
         })(FieldList[component]())}
-        {col === 24 ? <span style={{ fontSize: 12, color: '#999' }}>用 "," 隔开</span> : null}
       </Form.Item>
     </Col>
   );
