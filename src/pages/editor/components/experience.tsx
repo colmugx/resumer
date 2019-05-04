@@ -4,6 +4,7 @@ import translate from '@/utils/translate';
 import { FormComponentProps } from 'antd/lib/form';
 import { TExp, TDesc } from '../form';
 import styles from './style.scss';
+import { AddMoreBtn } from '@/utils/singleComponent';
 
 interface IProps extends FormComponentProps {
   onChange?: (val: any) => any;
@@ -198,11 +199,7 @@ class ExperienceWrapper extends PureComponent<IProps, IState> {
           </div>
         ))}
         <Form.Item>
-          <Button type="dashed" onClick={this.addItem} style={{ width: '60%' }}>
-            <Icon type="plus" />
-            {translate('common.add')}
-            {translate('info.others.experiences')}
-          </Button>
+          <AddMoreBtn onClick={this.addItem} label="info.others.experiences" />
           {this.state.editing && (
             <a onClick={() => this.saveValue(this.state.list)} style={{ marginLeft: 16 }}>
               锁定

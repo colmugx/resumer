@@ -2,7 +2,8 @@ import React, { FormEvent, useState } from 'react';
 import { Form, Button, Input, Select, AutoComplete, Row, Col } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import EducationWrapper from './components/education';
-import ExperiencesWrapper from './components/experience';
+import ExperienceWrapper from './components/experience';
+import ProjectWrapper from './components/project';
 import { profile as profileList } from '@/constant/column';
 import translate from '@/utils/translate';
 
@@ -136,7 +137,8 @@ const EditorForm: React.FC<IProps> = ({ onValue, initValue, form }) => {
     >
       {renderProfile()}
       {getFieldDecorator('educations')(<EducationWrapper form={form} />)}
-      {getFieldDecorator('experiences')(<ExperiencesWrapper form={form} />)}
+      {getFieldDecorator('experiences')(<ExperienceWrapper form={form} />)}
+      {getFieldDecorator('projects')(<ProjectWrapper form={form} />)}
       {renderPersonal()}
       <Form.Item>
         <Button type="primary" htmlType="submit">
