@@ -4,7 +4,7 @@ import translate from '@/utils/translate';
 import { FormComponentProps } from 'antd/lib/form';
 import { TEdu, TDegree } from '../form';
 
-import styles from './education.scss';
+import styles from './style.scss';
 
 interface IProps extends FormComponentProps {
   onChange?: (val: any) => any;
@@ -80,7 +80,7 @@ class EducationWrapper extends PureComponent<IProps, IState> {
     if (data.length === 1) {
       return;
     }
-    data = data.filter(({ id }: { id: number }) => id !== idx);
+    data = data.filter((_:undefined, id: number) => id !== idx);
     newList[key]['degrees'] = data;
     this.setState({ list: newList });
     this.saveValue(newList);
@@ -165,14 +165,17 @@ class EducationWrapper extends PureComponent<IProps, IState> {
           </Form.Item>
           {degrees.map((items, idx) => (
             <div key={`degree-${idx}`} className={styles.degreeItem}>
-              {/* key: 学校序位, idx: 一组最高学位序位 */}
-              <div>{this.renderDegreeItem(items, key, idx)}</div>
               <div className={styles.opreate}>
-                <Button type="primary" icon="plus" onClick={() => this.addDegree(key)} />
+                <a onClick={() => this.addDegree(key)} >
+                  <Icon type="plus" />
+                </a>
                 {idx !== 0 && (
-                  <Button type="danger" icon="close" onClick={() => this.removeDegree(key, idx)} />
+                  <a onClick={() => this.removeDegree(key, idx)} >
+                    <Icon type="close" />
+                  </a>
                 )}
               </div>
+              <div>{this.renderDegreeItem(items, key, idx)}</div>
             </div>
           ))}
         </div>
@@ -219,7 +222,8 @@ class EducationWrapper extends PureComponent<IProps, IState> {
         <Form.Item>
           <Button type="dashed" onClick={this.addSchool} style={{ width: '60%' }}>
             <Icon type="plus" />
-            添加教育经历
+            {translate('common.add')}
+            {translate('info.others.educations')}
           </Button>
           {this.state.editing && (
             <a onClick={() => this.saveValue(this.state.list)} style={{ marginLeft: 16 }}>
