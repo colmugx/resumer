@@ -109,7 +109,6 @@ const prjMsgBox = (msgList: TProj[]) => (
         <header className={styles.header}>
           <div className="title">
             <h4>{name}</h4>
-            {link && <a href={link}>{link}</a>}
             <ul className="tag-list">
               {stack.map(tag => (
                 <li key={`tag-${name}-${tag}`} className="tag-item">
@@ -118,6 +117,7 @@ const prjMsgBox = (msgList: TProj[]) => (
               ))}
             </ul>
           </div>
+          {link && <a href={link}>{link}</a>}
         </header>
         <ul className={styles.projectList}>
           {description.map(desc => (
