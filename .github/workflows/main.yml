@@ -8,9 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node_version: 12
   
     steps:
     - name: Deploy to GitHub Pages
